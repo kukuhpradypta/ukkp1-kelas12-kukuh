@@ -22,10 +22,9 @@ class LoginregisController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required',
+            'name'      => 'required|unique:users',
             'nik'      => 'required|min:3|max:255|unique:users',
-            'email'     => 'required|email:dns|unique:users',
-            'password'  => 'required|min:3|max:255',
+            'password'  => 'max:255',
         ]);
 
         //upload foto
@@ -34,7 +33,6 @@ class LoginregisController extends Controller
             'name'     => $request->name,
             'nik'     => $request->nik,
             'foto'     => 'default.png',
-            'email'     => $request->email,
             'password' => Hash::make($request->password),
         ]);
         if ($user) {
@@ -50,8 +48,9 @@ class LoginregisController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
-            'password' => 'required'
+            'name' => 'required',
+            'nik' => 'required',
+            'password' => ''
         ]);
 
         if (Auth::attempt($credentials)) {

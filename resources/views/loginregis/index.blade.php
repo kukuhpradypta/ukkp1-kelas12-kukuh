@@ -40,13 +40,18 @@
                 @csrf
 
 
-                <input id="emaillogin" type="email" class="@error('email') is-invalid @enderror" name="email"
-                    placeholder="Email" required value="{{ old('email') }}" />
-                @error('email')
+                <input type="text" class="@error('name') is-invalid @enderror" name="name" placeholder="name" required
+                    value="{{ old('name') }}" />
+                @error('name')
+                    <div class="invalid-feedback"></div>
+                @enderror
+                <input type="text" class="@error('nik') is-invalid @enderror" name="nik" placeholder="nik" required
+                    value="{{ old('nik') }}" />
+                @error('nik')
                     <div class="invalid-feedback"></div>
                 @enderror
                 <input type="password" class="@error('password') is-invalid @enderror" name="password"
-                    placeholder="Password" required value="{{ old('email') }}" />
+                    placeholder="password" value="" hidden />
                 @error('password')
                     <div class="invalid-feedback"></div>
                 @enderror
@@ -83,13 +88,8 @@
                 @error('nik')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-                <input type="email" class="@error('email') is-invalid @enderror" name="email" placeholder="Email"
-                    required value="{{ old('email') }}" />
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-                <input type="password" class="@error('password') is-invalid @enderror" name="password"
-                    placeholder="Password" required />
+                <input type="password" hidden disabled class="@error('password') is-invalid @enderror" name="password"
+                    placeholder="Password" />
                 @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

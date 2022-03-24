@@ -60,11 +60,10 @@
                         </div>
 
                         <div>NIK : {{ auth()->user()->nik }} </div>
-                        <div>Email : {{ auth()->user()->email }} </div>
 
-                        <div class="text-left">
+                        {{-- <div class="text-left">
                             <button onclick="create()" class="btn btn-primary mt-4">Edit Password</button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -97,19 +96,6 @@
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12 col-12">
-                                    <label>Email</label>
-                                    <input value="{{ old('email', Auth::user()->email) }}" type="email" name="email"
-                                        class="form-control @error('email') is-invalid @enderror">
-                                    @error('email')
-                                        <div class="alert alert-danger mt-2">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-
                             </div>
                             <div class="row">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"

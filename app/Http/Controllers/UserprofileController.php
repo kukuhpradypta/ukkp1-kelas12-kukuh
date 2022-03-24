@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Rules\MatchOldPassword;
+// use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +27,6 @@ class UserprofileController extends Controller
         if (Str::length($user1) > 0) {
             $this->validate($request, [
                 'name'     => 'required',
-                'email'     => 'required',
                 'nik'     => 'required',
             ]);
 
@@ -39,19 +38,6 @@ class UserprofileController extends Controller
                 $user->update([
                     'name'     => $request->name,
                     'nik'     => $request->nik,
-                    'email'     => $request->email,
-                ]);
-            } else if ($request->email == $user->email) {
-                Storage::disk('local')->delete('assets/images/' . Auth::user()->foto);
-
-                //upload new image
-                $foto = $request->file('foto');
-                $foto->storeAs('assets/images', $foto->getOriginalName());
-
-                $user->update([
-                    'name' => $request->name,
-                    'foto'     => $foto->getOriginalName(),
-                    'nik' => $request->nik,
                 ]);
             } else if ($request->nik == $user->nik) {
 
@@ -59,12 +45,12 @@ class UserprofileController extends Controller
 
                 //upload new image
                 $foto = $request->file('foto');
+
                 $foto->storeAs('assets/images', $foto->getOriginalName());
 
                 $user->update([
                     'name'     => $request->name,
                     'foto'     => $foto->getOriginalName(),
-                    'email'     => $request->email,
                 ]);
             } else {
                 //hapus old image
@@ -78,7 +64,6 @@ class UserprofileController extends Controller
                     'name'     => $request->name,
                     'foto'     => $foto->getOriginalName(),
                     'nik'     => $request->nik,
-                    'email'     => $request->email,
                 ]);
             }
 
@@ -91,19 +76,19 @@ class UserprofileController extends Controller
             }
         }
     }
-    public function changePasswordDB(Request $request)
-    {
-        $request->validate([
-            'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
-        ]);
+    // public function changePasswordDB(Request $request)
+    // {
+    //     $request->validate([
+    //         'current_password' => ['required', new MatchOldPassword],
+    //         'new_password' => ['required'],
+    //         'new_confirm_password' => ['same:new_password'],
+    //     ]);
 
-        User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
-        DB::commit();
+    //     User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+    //     DB::commit();
 
-        return redirect()->intended('userprofile')->with([
-            Alert::success('Success', 'Change Password Successfull!')
-        ]);
-    }
+    //     return redirect()->intended('userprofile')->with([
+    //         Alert::success('Success', 'Change Password Successfull!')
+    //     ]);
+    // }
 }
